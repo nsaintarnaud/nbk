@@ -1,0 +1,15 @@
+#!/bin/sh                                                                     
+# nsaintarnaud 201308
+
+# added iterator over arguments $@
+# added double quotes "$1" to handle file names with spaces
+
+
+for filename in "$@"
+do
+  if [ `uname` != "Darwin" ]; then
+    cp -p -f "$filename" "$filename".$(date +%Y%m%d.%H%M -r "$filename").bak
+  else
+    cp -p -f "$filename" "$filename".$(stat -f "%Sm" -t "%Y%m%d.%H%M" "$filename").bak
+  fi
+done
